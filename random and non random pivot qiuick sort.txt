@@ -1,0 +1,36 @@
+import random
+
+def partition(arr, low, high, random_pivot=False):
+if random_pivot:
+rand_index = random.randint(low, high)
+arr[high], arr[rand_index] = arr[rand_index], arr[high]
+
+pivot = arr[high]
+i = low - 1
+
+for j in range(low, high):
+if arr[j] <= pivot:
+i += 1
+arr[i], arr[j] = arr[j], arr[i]
+
+arr[i + 1], arr[high] = arr[high], arr[i + 1]
+return i + 1
+
+def quicksort(arr, low, high, random_pivot=False):
+if low < high:
+pivot_index = partition(arr, low, high, random_pivot)
+quicksort(arr, low, pivot_index - 1, random_pivot)
+quicksort(arr, pivot_index + 1, high, random_pivot)
+
+# Sample array to sort elements using non-random and random pivot elements
+arr = [11, 9, 19, 15, 2, 5]
+
+# Sorting using non-random pivot
+non_random_arr = arr[:]
+quicksort(non_random_arr, 0, len(arr) - 1)
+print("Sorted array using non-random pivot:", non_random_arr)
+
+# Sorting using random pivot
+random_arr = arr[:]
+quicksort(random_arr, 0, len(arr) - 1, random_pivot=True)
+print("Sorted array using random pivot:", random_arr)
